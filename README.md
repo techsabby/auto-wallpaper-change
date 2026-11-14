@@ -1,7 +1,7 @@
 # automatic_wallpaper_change
 Changes wallpaper based on various factors such as time, location, or season.
 
-<img width="736" height="736" alt="seasonal change canvas" src="https://github.com/user-attachments/assets/a8032614-4757-4cc9-b27c-1f7a37a918e7" />
+<img width="200" height="200" alt="seasonal change canvas" src="https://github.com/user-attachments/assets/a8032614-4757-4cc9-b27c-1f7a37a918e7" />
 
 **Currently Working On:** Creating GUI 
 
