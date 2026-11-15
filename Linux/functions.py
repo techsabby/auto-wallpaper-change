@@ -5,7 +5,7 @@ import datetime
 latitude = "40.712784"
 longitude = "-74.005943"
 
-api_url = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&tzid=America/New_York" + "&date=" + "&date="
+api_url = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&tzid=America/New_York" + "&date=" 
 
 gsettings_command = "gsettings set org.gnome.desktop.background picture-uri"
 wallpaper_path = "/home/sabby/Pictures/Automatic/"
@@ -17,7 +17,7 @@ def get_twilight_api(date):
     
     return api_data
 
-# * api_data is json and date is datetime object 
+# * api_data = json and date = datetime object 
 def get_sunrise_datetime(api_data, date):
 	sunrise = api_data['sunrise']
 
