@@ -17,11 +17,18 @@ while True:
 
     today_date = datetime.date.today()                          # example: 2026-06-18
     twilight_api = functions.get_twilight_api(today_date)       # returns filtered json
+    print(twilight_api)
     today_sunrise = functions.get_sunrise_datetime(twilight_api, today_date)    # return sunrise datetime object
     today_sunset = functions.get_sunset_datetime(twilight_api, today_date)      # return sunset datetime object
     # ? now_datetime = datetime.datetime.now() # return the datetime object at this moment // this code was not used previously 
 
+    print(today_sunrise)
+    print(today_sunset)
+
+    time.sleep(5000)
+
     # checks to see if it is after sunset (waits for tomorrow's sunrise if it is) otherwise waits for either today's sunrise or sunset
+    """
     if (datetime.datetime.now() > today_sunset):
         logging.info("1")
         tomorrow_date = datetime.date.today() + datetime.timedelta(days=1)
@@ -76,3 +83,4 @@ while True:
             functions.run_gsettings(night_wallpaper)
 
             logging.info("6")
+        """

@@ -11,7 +11,7 @@ gsettings_command = "gsettings set org.gnome.desktop.background picture-uri"
 wallpaper_path = "/home/sabby/Pictures/Automatic/"
 
 def get_twilight_api(date):
-    response = requests.get(api_url + date)
+    response = requests.get(api_url + str(date))
     api_json = response.json()
     api_data = api_json.get("results")
     
