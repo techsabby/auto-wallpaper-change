@@ -15,20 +15,11 @@ while True:
     print("STATUS: auto-wallpaper is running...")
     logging.info("Program started")
 
-                 # ! str isn't used in old version    
-    today_date = datetime.date.today()                      # example: 2026-06-18
-    print(type(today_date))   
-    twilight_api = functions.get_twilight_api(today_date)   # returns filtered json
-
-    print("filtered json:")
-    print(twilight_api)
-
-    today_sunrise = functions.get_sunrise_datetime(twilight_api, datetime.date.today()) # return sunrise datetime object
-    today_sunset = functions.get_sunset_datetime(twilight_api, datetime.date.today())   # return sunset datetime object
-
-    print(f"Today's date: {today_date}")
-    print(f"Today's sunrise: {today_sunrise}")
-    print(f"Today's sunset: {today_sunset}")
+    today_date = datetime.date.today()                          # example: 2026-06-18
+    twilight_api = functions.get_twilight_api(today_date)       # returns filtered json
+    today_sunrise = functions.get_sunrise_datetime(twilight_api, today_date)    # return sunrise datetime object
+    today_sunset = functions.get_sunset_datetime(twilight_api, today_date)      # return sunset datetime object
+    # ? now_datetime = datetime.datetime.now() # return the datetime object at this moment // this code was not used previously 
 
     # checks to see if it is after sunset (waits for tomorrow's sunrise if it is) otherwise waits for either today's sunrise or sunset
     if (datetime.datetime.now() > today_sunset):
