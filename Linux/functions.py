@@ -5,7 +5,7 @@ import datetime
 latitude = "40.712784"
 longitude = "-74.005943"
 
-api_url = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&tzid=America/New_York" + "&date="
+api_url = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude + "&tzid=America/New_York" + "&date=" 
 
 gsettings_command = "gsettings set org.gnome.desktop.background picture-uri"
 wallpaper_path = "/home/sabby/Pictures/Automatic/"
