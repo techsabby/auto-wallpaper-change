@@ -1,37 +1,45 @@
-import time
-import logging
 import datetime
-
-import weather
 import functions
+import logging
+import time
+import weather
+
 
 logging.basicConfig(filename="log_file.log", encoding='utf-8', level=logging.DEBUG, format='%(asctime)s %(message)s')
-
-# this program gets the sunrise and sunset times for your area 
-# via an api call and compares it against the current time to automatically 
-# to set your wallpaper based on if its day or night time :) 
 
 day_sunny_wallpaper = "day.jpeg"
 day_rainy_wallpaper = "rain.png"
 night_wallpaper = "night.png"
 
 while True:
+    print("STATUS: auto-wallpaper is running...")
     logging.info("Program started")
-    today_date = str(datetime.date.today())
-    api_data = functions.return_apicall(today_date) 
-    sunrise_date_time_EST = functions.return_sunrise_date_time_EST(api_data, datetime.date.today()) 
-    sunset_date_time_EST = functions.return_sunset_date_time_EST(api_data, datetime.date.today()) 
+
+                 # ! str isn't used in old version    
+    today_date = datetime.date.today()                      # example: 2026-06-18
+    print(type(today_date))   
+    twilight_api = functions.get_twilight_api(today_date)   # returns filtered json
+
+    print("filtered json:")
+    print(twilight_api)
+
+    today_sunrise = functions.get_sunrise_datetime(twilight_api, datetime.date.today()) # return sunrise datetime object
+    today_sunset = functions.get_sunset_datetime(twilight_api, datetime.date.today())   # return sunset datetime object
+
+    print(f"Today's date: {today_date}")
+    print(f"Today's sunrise: {today_sunrise}")
+    print(f"Today's sunset: {today_sunset}")
 
     # checks to see if it is after sunset (waits for tomorrow's sunrise if it is) otherwise waits for either today's sunrise or sunset
-    if (datetime.datetime.now() > sunset_date_time_EST):
+    if (datetime.datetime.now() > today_sunset):
         logging.info("1")
         tomorrow_date = datetime.date.today() + datetime.timedelta(days=1)
-        api_data = functions.return_apicall(today_date) # still passing today_date b/c api provides next day info after sunset
-        sunrise_date_time_EST = functions.return_sunrise_date_time_EST(api_data, tomorrow_date)
+        twilight_api = functions.get_twilight_api(today_date) # still passing today_date b/c api provides next day info after sunset
+        today_sunrise = functions.get_sunrise_datetime(twilight_api, tomorrow_date)
 
         functions.run_gsettings(night_wallpaper)
 
-        while (datetime.datetime.now() < sunrise_date_time_EST):
+        while (datetime.datetime.now() < today_sunrise):
             time.sleep(60)
 
 
@@ -43,12 +51,12 @@ while True:
         logging.info("2")
 
     else:
-        if (datetime.datetime.now() < sunrise_date_time_EST):
+        if (datetime.datetime.now() < today_sunrise):
             logging.info("3")
             
             functions.run_gsettings(night_wallpaper)
 
-            while(datetime.datetime.now() < sunrise_date_time_EST):
+            while(datetime.datetime.now() < today_sunrise):
                 time.sleep(60)
 
             if(weather.get_condition() < 1006): 
@@ -66,7 +74,7 @@ while True:
             else:
                 functions.run_gsettings(day_rainy_wallpaper)
 
-            while(datetime.datetime.now() < sunset_date_time_EST):
+            while(datetime.datetime.now() < today_sunset):
                 time.sleep(60)
 
                 if(weather.get_condition() < 1006): 
